@@ -2,27 +2,18 @@ import React, { useEffect, useState } from "react";
 import {
   getAirportCode,
   getAirportCodeList,
-  getInternationalAirline,
   getRealtimeAirline,
 } from "../api/api";
+import AirlineSearchComponent from "../components/Main/AirlineSearchComponent";
+import axios from "axios";
 
 export default function Home() {
-  const [user, setUser] = useState({
-    name: "",
-    age: "",
-  });
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("your name is " + user.name + ", your age is " + user.age);
-  };
-
-  const getApi = () => {
-    getRealtimeAirline(1);
-  };
-
   useEffect(() => {
-    getApi();
+    getAirportCodeList();
   }, []);
-
-  return <div>hello world</div>;
+  return (
+    <div>
+      <AirlineSearchComponent />
+    </div>
+  );
 }

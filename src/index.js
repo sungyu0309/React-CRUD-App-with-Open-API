@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 import Home from "./pages/Home";
 import { GlobalStyle } from "./styles/GlobalStyle";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const router = createBrowserRouter([
   {

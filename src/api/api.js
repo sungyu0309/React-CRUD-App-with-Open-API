@@ -8,9 +8,7 @@ export const getAirportCode = async (pageNo) => {
 
     const response = await axios.get(fullUrl);
     if (response.data.response.body.items) {
-      console.log("response", response);
       const items = response.data.response.body.items.item;
-      console.log("Items", items);
       const newArr = items.map((itm) => ({
         code: itm.cityCode,
         kor: itm.cityKor,
@@ -96,10 +94,29 @@ export const getRealtimeAirline = async (pageNo) => {
 
 export const getAirportCodeList = async () => {
   try {
-    const url = "https://6707c25d8e86a8d9e42ccc3b.mockapi.io/api/airportCode";
+    const url =
+      "https://6707c25d8e86a8d9e42ccc3b.mockapi.io/api/airportCodeList";
     const response = await axios.get(url);
     if (response) {
-      console.log(response.data[0]);
+      // 중복된 label (itm.kor)을 걸러내기 위한 Set 생성
+      const seenLabels = new Set();
+
+      const newArr = response.data[0].codes
+        .filter((itm) => {
+          // 이미 존재하는 label인지 확인
+          if (seenLabels.has(itm.kor)) {
+            return false; // 중복되면 false
+          } else {
+            seenLabels.add(itm.kor); // 중복이 아니면 Set에 추가
+            return true;
+          }
+        })
+        .map((itm) => ({
+          label: itm.kor,
+          code: itm.code,
+        }));
+
+      return newArr;
     }
   } catch (err) {
     console.log("ERROR : get code list from mockapi");
