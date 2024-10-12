@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { getAirportCode } from "../api/api";
-import axios from "axios";
+import {
+  getAirportCode,
+  getAirportCodeList,
+  getInternationalAirline,
+  getRealtimeAirline,
+} from "../api/api";
 
 export default function Home() {
-  const [airportCodes, setAirportCodes] = useState("");
+  const [user, setUser] = useState({
+    name: "",
+    age: "",
+  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert("your name is " + user.name + ", your age is " + user.age);
+  };
 
-  const getApi = async () => {
-    for (let pageNo = 1; pageNo <= 1; pageNo++) {
-      //136
-      const newArr = await getAirportCode(pageNo);
-      if (newArr) {
-        setAirportCodes((prev) => [...prev, ...newArr]);
-      }
-    }
-
-    axios
-      .get("https://6707c25d8e86a8d9e42ccc3b.mockapi.io/api/airportCode")
-      .then((res) => {
-        console.log(res.data[0]);
-      })
-      .catch((err) => console.log(err));
+  const getApi = () => {
+    getRealtimeAirline(1);
   };
 
   useEffect(() => {
     getApi();
   }, []);
 
-  return <div></div>;
+  return <div>hello world</div>;
 }
