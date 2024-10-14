@@ -2,15 +2,19 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import SearchModalComponent from "./SearchModalComponent";
 import SearchInputComponent from "./SearchInputComponent";
+import { Horizontal } from "../../styles/CommunalStyle";
+import DateInputComponent from "./DateInputComponent";
+import LoadBtnComponent from "./LoadBtnComponent";
 
 export default function AirlineSearchComponent() {
   const [showModal, setShowModal] = useState(false);
   const [componentPosition, setComponentPosition] = useState("");
-  const [airport, setAirport] = useState({
+  const [airlineInfo, setAirlineInfo] = useState({
     departAirport: "인천",
     departCode: "ICN",
-    arriveAirport: "부산",
+    arriveAirport: "부산/김해",
     arriveCode: "PUS",
+    searchDate: "",
   });
 
   const departBtnRef = useRef(null);
@@ -33,15 +37,15 @@ export default function AirlineSearchComponent() {
 
   const handleChangeBtnClick = () => {
     const newArr = {
-      departAirport: airport.arriveAirport,
-      departCode: airport.arriveCode,
-      arriveAirport: airport.departAirport,
-      arriveCode: airport.departCode,
+      departAirport: airlineInfo.arriveAirport,
+      departCode: airlineInfo.arriveCode,
+      arriveAirport: airlineInfo.departAirport,
+      arriveCode: airlineInfo.departCode,
     };
-    setAirport(newArr);
+    setAirlineInfo((prev) => ({ ...prev, ...newArr }));
   };
   return (
-    <>
+    <Horizontal style={{ marginTop: "30px" }}>
       {showModal && (
         <SearchModalComponent
           closeModal={() => setShowModal(false)}
@@ -49,7 +53,7 @@ export default function AirlineSearchComponent() {
         >
           <SearchInputComponent
             type={componentPosition.type}
-            setAirport={setAirport}
+            setAirport={setAirlineInfo}
             closeModal={() => setShowModal(false)}
           />
         </SearchModalComponent>
@@ -60,7 +64,7 @@ export default function AirlineSearchComponent() {
           onClick={() => handleLocationBtnClick("depart")}
           ref={departBtnRef}
         >
-          {airport.departAirport}
+          {airlineInfo.departAirport}
         </LocationBtn>
         <ChangeBtn id="exchange" onClick={handleChangeBtnClick}>
           exchange
@@ -70,14 +74,22 @@ export default function AirlineSearchComponent() {
           onClick={() => handleLocationBtnClick("arrive")}
           ref={arriveBtnRef}
         >
-          {airport.arriveAirport}
+          {airlineInfo.arriveAirport}
         </LocationBtn>
       </LocationContainer>
-    </>
+      <DateContainer>
+        <p>출발일자 선택</p>
+        <DateInputComponent setDate={setAirlineInfo} />
+      </DateContainer>
+      <LoadBtnContainer>
+        <LoadBtnComponent airlineInfo={airlineInfo} />
+      </LoadBtnContainer>
+    </Horizontal>
   );
 }
 
 const LocationContainer = styled.div`
+  width: 40%;
   border: 1px solid red;
   height: 100px;
 `;
@@ -98,4 +110,16 @@ const ChangeBtn = styled.button`
   cursor: pointer;
   border: 1px solid blue;
   width: 30px;
+`;
+
+const DateContainer = styled.div`
+  width: 30%;
+  border: 1px solid blue;
+  height: 100px;
+`;
+
+const LoadBtnContainer = styled.div`
+  width: 20%;
+  height: 100px;
+  border: 1px solid green;
 `;
