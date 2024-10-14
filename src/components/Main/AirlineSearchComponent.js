@@ -14,7 +14,8 @@ export default function AirlineSearchComponent() {
     departCode: "ICN",
     arriveAirport: "부산/김해",
     arriveCode: "PUS",
-    searchDate: "",
+    minDate: "",
+    maxDate: "",
   });
 
   const departBtnRef = useRef(null);
