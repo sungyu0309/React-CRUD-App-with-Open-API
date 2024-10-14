@@ -9,8 +9,8 @@ export default function AirlineSearchComponent() {
   const [airport, setAirport] = useState({
     departAirport: "인천",
     departCode: "ICN",
-    arriveAirport: "",
-    arriveCode: "",
+    arriveAirport: "부산",
+    arriveCode: "PUS",
   });
 
   const departBtnRef = useRef(null);
@@ -30,6 +30,16 @@ export default function AirlineSearchComponent() {
     setComponentPosition(newPosition);
     setShowModal(true);
   };
+
+  const handleChangeBtnClick = () => {
+    const newArr = {
+      departAirport: airport.arriveAirport,
+      departCode: airport.arriveCode,
+      arriveAirport: airport.departAirport,
+      arriveCode: airport.departCode,
+    };
+    setAirport(newArr);
+  };
   return (
     <>
       {showModal && (
@@ -37,7 +47,11 @@ export default function AirlineSearchComponent() {
           closeModal={() => setShowModal(false)}
           position={componentPosition}
         >
-          <SearchInputComponent />
+          <SearchInputComponent
+            type={componentPosition.type}
+            setAirport={setAirport}
+            closeModal={() => setShowModal(false)}
+          />
         </SearchModalComponent>
       )}
       <LocationContainer>
@@ -48,13 +62,15 @@ export default function AirlineSearchComponent() {
         >
           {airport.departAirport}
         </LocationBtn>
-        <ChangeBtn id="exchange">exchange</ChangeBtn>
+        <ChangeBtn id="exchange" onClick={handleChangeBtnClick}>
+          exchange
+        </ChangeBtn>
         <LocationBtn
           id="arrive"
           onClick={() => handleLocationBtnClick("arrive")}
           ref={arriveBtnRef}
         >
-          도쿄
+          {airport.arriveAirport}
         </LocationBtn>
       </LocationContainer>
     </>

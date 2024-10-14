@@ -84,6 +84,7 @@ export const getRealtimeAirline = async (pageNo) => {
     console.log(response);
     if (response.data.response.body.items) {
       const items = response.data.response.body.items.item;
+      console.log(items);
     }
     return undefined;
   } catch (err) {
