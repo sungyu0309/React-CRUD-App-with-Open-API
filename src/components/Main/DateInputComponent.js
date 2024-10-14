@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Horizontal } from "../../styles/CommunalStyle";
+import { Horizontal, Vertical } from "../../styles/CommunalStyle";
 import styled from "styled-components";
 
 export default function DateInputComponent({ setDate }) {
@@ -11,16 +11,12 @@ export default function DateInputComponent({ setDate }) {
   const handleInputChange = (e) => {
     const { value, id } = e.target;
 
-    const year = value.slice(0, 4);
-    const month = value.slice(5, 7);
-    const day = value.slice(8, 10);
-
     if (id === "minDate") {
       setInputValue((prev) => ({ ...prev, minDate: value }));
-      setDate((prev) => ({ ...prev, minDate: year + month + day }));
+      setDate((prev) => ({ ...prev, minDate: value }));
     } else {
       setInputValue((prev) => ({ ...prev, maxDate: value }));
-      setDate((prev) => ({ ...prev, maxDate: year + month + day }));
+      setDate((prev) => ({ ...prev, maxDate: value }));
     }
   };
 
@@ -36,7 +32,7 @@ export default function DateInputComponent({ setDate }) {
     return result.toISOString().split("T")[0]; // yyyy-mm-dd 형식으로 반환
   };
   return (
-    <Horizontal>
+    <Vertical>
       <DateInput
         type="date"
         id="minDate"
@@ -54,7 +50,7 @@ export default function DateInputComponent({ setDate }) {
         value={inputValue.maxDate}
         onChange={handleInputChange}
       />
-    </Horizontal>
+    </Vertical>
   );
 }
 

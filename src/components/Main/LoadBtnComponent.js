@@ -3,28 +3,60 @@ import { getDomesticAirline, getInternationalAirline } from "../../api/api";
 
 export default function LoadBtnComponent({ airlineInfo }) {
   const isHaveNullValue = (info) => {
-    if (
-      info.arriveAirport === "" ||
+    return info.arriveAirport === "" ||
       info.departAirport === "" ||
-      info.searchDate === ""
-    )
-      return true;
-
-    return false;
+      info.minDate === "" ||
+      info.maxDate === ""
+      ? true
+      : false;
   };
 
-  const handleBtnClick = async () => {
+  const areBothDomesticAirports = (info) => {
+    return domesticAiportCodes.includes(info.arriveCode) &&
+      domesticAiportCodes.includes(info.departCode)
+      ? true
+      : false;
+  };
+
+  const getAirlines = async (date) => {
+    const newDate = date.slice(0, 4) + date.slice(5, 7) + date.slice(8, 10);
+
+    if (areBothDomesticAirports(airlineInfo)) {
+      let pageNo = 1;
+
+      while (true) {
+        const response = await getDomesticAirline(pageNo, newDate, airlineInfo);
+        console.log(response); // 응답 페이지네이션 필요
+        if (response[0].totalCount - pageNo * 10 < 10) break;
+        pageNo++;
+      }
+    } else {
+      let pageNo = 1;
+
+      while (true) {
+        const response = await getInternationalAirline(
+          pageNo,
+          newDate,
+          airlineInfo
+        );
+        console.log(response); // 응답 페이지네이션 필요
+        if (response[0].totalCount - pageNo * 10 < 10) break;
+        pageNo++;
+      }
+    }
+  };
+
+  const handleBtnClick = () => {
     if (isHaveNullValue(airlineInfo)) alert("날짜를 입력해주세요");
 
-    if (
-      domesticAiportCodes.includes(airlineInfo.arriveCode) &&
-      domesticAiportCodes.includes(airlineInfo.departCode)
-    ) {
-      const response = await getDomesticAirline(1, airlineInfo);
-      console.log(response);
-    } else {
-      const response = await getInternationalAirline(1, airlineInfo);
-      console.log(response);
+    let minDate = new Date(airlineInfo.minDate);
+    let maxDate = new Date(airlineInfo.maxDate);
+
+    while (minDate.getDate() <= maxDate.getDate()) {
+      minDate = minDate.toISOString().split("T")[0];
+      getAirlines(minDate);
+      minDate = new Date(minDate);
+      minDate.setDate(minDate.getDate() + 1);
     }
   };
   return (

@@ -22,11 +22,11 @@ export const getAirportCode = async (pageNo) => {
   }
 };
 
-export const getDomesticAirline = async (pageNo, airlineInfo) => {
+export const getDomesticAirline = async (pageNo, date, airlineInfo) => {
   try {
     const serviceKey = process.env.REACT_APP_API_KEY;
     const url = "service/rest/FlightScheduleList/getDflightScheduleList";
-    const fullUrl = `${url}?ServiceKey=${serviceKey}&pageNo=${pageNo}&schDate=${airlineInfo.searchDate}&schArrvCityCode=${airlineInfo.arriveCode}&schDeptCityCode=${airlineInfo.departCode}`;
+    const fullUrl = `${url}?ServiceKey=${serviceKey}&pageNo=${pageNo}&schDate=${date}&schArrvCityCode=${airlineInfo.arriveCode}&schDeptCityCode=${airlineInfo.departCode}`;
 
     const response = await axios.get(fullUrl);
     console.log(response);
@@ -39,7 +39,7 @@ export const getDomesticAirline = async (pageNo, airlineInfo) => {
         startcity: itm.startcity,
         arrivalcity: itm.arrivalcity,
         airlineKorean: itm.airlineKorean,
-        totalCount: response.data.body.totalCount,
+        totalCount: response.data.response.body.totalCount,
       }));
       return newArr;
     }
@@ -50,11 +50,11 @@ export const getDomesticAirline = async (pageNo, airlineInfo) => {
   }
 };
 
-export const getInternationalAirline = async (pageNo, airlineInfo) => {
+export const getInternationalAirline = async (pageNo, date, airlineInfo) => {
   try {
     const serviceKey = process.env.REACT_APP_API_KEY;
     const url = "service/rest/FlightScheduleList/getIflightScheduleList";
-    const fullUrl = `${url}?ServiceKey=${serviceKey}&pageNo=${pageNo}&schDate=${airlineInfo.searchDate}&schArrvCityCode=${airlineInfo.arriveCode}&schDeptCityCode=${airlineInfo.departCode}`;
+    const fullUrl = `${url}?ServiceKey=${serviceKey}&pageNo=${pageNo}&schDate=${date}&schArrvCityCode=${airlineInfo.arriveCode}&schDeptCityCode=${airlineInfo.departCode}`;
 
     const response = await axios.get(fullUrl);
     if (response.data.response.body.items) {
