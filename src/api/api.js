@@ -22,13 +22,14 @@ export const getAirportCode = async (pageNo) => {
   }
 };
 
-export const getDomesticAirline = async (pageNo) => {
+export const getDomesticAirline = async (pageNo, airlineInfo) => {
   try {
     const serviceKey = process.env.REACT_APP_API_KEY;
     const url = "service/rest/FlightScheduleList/getDflightScheduleList";
-    const fullUrl = `${url}?ServiceKey=${serviceKey}&pageNo=${pageNo}`;
+    const fullUrl = `${url}?ServiceKey=${serviceKey}&pageNo=${pageNo}&schDate=${airlineInfo.searchDate}&schArrvCityCode=${airlineInfo.arriveCode}&schDeptCityCode=${airlineInfo.departCode}`;
 
     const response = await axios.get(fullUrl);
+    console.log(response);
     if (response.data.response.body.items) {
       const items = response.data.response.body.items.item;
       const newArr = items.map((itm) => ({
@@ -38,8 +39,9 @@ export const getDomesticAirline = async (pageNo) => {
         startcity: itm.startcity,
         arrivalcity: itm.arrivalcity,
         airlineKorean: itm.airlineKorean,
+        totalCount: response.data.body.totalCount,
       }));
-      console.log(newArr);
+      return newArr;
     }
     return undefined;
   } catch (err) {
@@ -48,24 +50,24 @@ export const getDomesticAirline = async (pageNo) => {
   }
 };
 
-export const getInternationalAirline = async (pageNo) => {
+export const getInternationalAirline = async (pageNo, airlineInfo) => {
   try {
     const serviceKey = process.env.REACT_APP_API_KEY;
     const url = "service/rest/FlightScheduleList/getIflightScheduleList";
-    const fullUrl = `${url}?ServiceKey=${serviceKey}&pageNo=${pageNo}`;
+    const fullUrl = `${url}?ServiceKey=${serviceKey}&pageNo=${pageNo}&schDate=${airlineInfo.searchDate}&schArrvCityCode=${airlineInfo.arriveCode}&schDeptCityCode=${airlineInfo.departCode}`;
 
     const response = await axios.get(fullUrl);
     if (response.data.response.body.items) {
       const items = response.data.response.body.items.item;
-      console.log(items);
       const newArr = items.map((itm) => ({
         internationalTime: itm.internationalTime,
         internationalNum: itm.internationalNum,
         startcity: itm.airport,
         arrivalcity: itm.city,
         airlineKorean: itm.airlineKorean,
+        totalCount: response.data.response.body.totalCount,
       })); // 국제선인경우 도착 시간 X
-      console.log(newArr);
+      return newArr;
     }
     return undefined;
   } catch (err) {
