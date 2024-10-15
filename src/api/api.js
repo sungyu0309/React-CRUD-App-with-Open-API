@@ -29,7 +29,6 @@ export const getDomesticAirline = async (pageNo, date, airlineInfo) => {
     const fullUrl = `${url}?ServiceKey=${serviceKey}&pageNo=${pageNo}&schDate=${date}&schArrvCityCode=${airlineInfo.arriveCode}&schDeptCityCode=${airlineInfo.departCode}`;
 
     const response = await axios.get(fullUrl);
-    console.log(response);
     if (response.data.response.body.items) {
       const items = response.data.response.body.items.item;
       const newArr = items.map((itm) => ({

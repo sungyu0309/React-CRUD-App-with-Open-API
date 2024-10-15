@@ -1,7 +1,11 @@
 import React from "react";
 import { getDomesticAirline, getInternationalAirline } from "../../api/api";
+import { useSetRecoilState } from "recoil";
+import { searchedAirlineState } from "../../store/atom";
 
 export default function LoadBtnComponent({ airlineInfo }) {
+  const setSearchedAirline = useSetRecoilState(searchedAirlineState);
+
   const isHaveNullValue = (info) => {
     return info.arriveAirport === "" ||
       info.departAirport === "" ||
@@ -26,8 +30,12 @@ export default function LoadBtnComponent({ airlineInfo }) {
 
       while (true) {
         const response = await getDomesticAirline(pageNo, newDate, airlineInfo);
-        console.log(response); // 응답 페이지네이션 필요
-        if (response[0].totalCount - pageNo * 10 < 10) break;
+        const newArr = response.map(({ totalCount, ...rest }) => ({
+          ...rest,
+          date: newDate,
+        }));
+        setSearchedAirline((prev) => [...prev, ...newArr]);
+        if (response[0].totalCount - pageNo * 10 < 0) break;
         pageNo++;
       }
     } else {
@@ -39,14 +47,15 @@ export default function LoadBtnComponent({ airlineInfo }) {
           newDate,
           airlineInfo
         );
-        console.log(response); // 응답 페이지네이션 필요
-        if (response[0].totalCount - pageNo * 10 < 10) break;
+        // console.log(response); // 응답 페이지네이션 필요
+        setSearchedAirline(response);
+        if (response[0].totalCount - pageNo * 10 < 0) break;
         pageNo++;
       }
     }
   };
 
-  const handleBtnClick = () => {
+  const handleBtnClick = async () => {
     if (isHaveNullValue(airlineInfo)) alert("날짜를 입력해주세요");
 
     let minDate = new Date(airlineInfo.minDate);
@@ -54,7 +63,7 @@ export default function LoadBtnComponent({ airlineInfo }) {
 
     while (minDate.getDate() <= maxDate.getDate()) {
       minDate = minDate.toISOString().split("T")[0];
-      getAirlines(minDate);
+      await getAirlines(minDate);
       minDate = new Date(minDate);
       minDate.setDate(minDate.getDate() + 1);
     }
