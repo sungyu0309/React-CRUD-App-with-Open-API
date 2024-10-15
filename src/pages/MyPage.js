@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios"; // axios로 API 호출
-import "./Home.css";
+import "./Mypage.css";
 
 export default function Home() {
   const [flights, setFlights] = useState([]);
