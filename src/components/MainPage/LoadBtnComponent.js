@@ -30,26 +30,51 @@ export default function LoadBtnComponent({ airlineInfo }) {
 
       while (true) {
         const response = await getDomesticAirline(pageNo, newDate, airlineInfo);
-        const newArr = response.map(({ totalCount, ...rest }) => ({
-          ...rest,
-          date: newDate,
-        }));
-        setSearchedAirline((prev) => [...prev, ...newArr]);
-        if (response[0].totalCount - pageNo * 10 < 0) break;
+        if (response === "트래픽초과") {
+          alert("일일 트래픽을 초과했습니다. 담당자에게 문의하세요");
+          break;
+        }
+
+        if (Array.isArray(response)) {
+          const newArr = response.map(({ totalCount, ...rest }) => ({
+            ...rest,
+            date: newDate,
+          }));
+          setSearchedAirline((prev) => [...prev, ...newArr]);
+        } else if (typeof response === "object") {
+          const { totalCount, ...newArr } = response;
+          setSearchedAirline((prev) => [...prev, newArr]);
+        }
+
+        if (response && response[0]?.totalCount - pageNo * 10 < 0) break;
         pageNo++;
       }
     } else {
       let pageNo = 1;
 
-      while (true) {
+      while (pageNo !== 4) {
         const response = await getInternationalAirline(
           pageNo,
           newDate,
           airlineInfo
         );
-        // console.log(response); // 응답 페이지네이션 필요
-        setSearchedAirline(response);
-        if (response[0].totalCount - pageNo * 10 < 0) break;
+
+        if (response === "트래픽초과") {
+          alert("일일 트래픽을 초과했습니다. 담당자에게 문의 주세요");
+          break;
+        }
+        if (Array.isArray(response)) {
+          const newArr = response.map(({ totalCount, ...rest }) => ({
+            ...rest,
+            date: newDate,
+          }));
+          setSearchedAirline((prev) => [...prev, ...newArr]);
+        } else if (typeof response === "object") {
+          const { totalCount, ...newArr } = response;
+          setSearchedAirline((prev) => [...prev, newArr]);
+        }
+
+        if (response && response[0]?.totalCount - pageNo * 10 < 0) break;
         pageNo++;
       }
     }
@@ -57,6 +82,7 @@ export default function LoadBtnComponent({ airlineInfo }) {
 
   const handleBtnClick = async () => {
     if (isHaveNullValue(airlineInfo)) alert("날짜를 입력해주세요");
+    setSearchedAirline([]);
 
     let minDate = new Date(airlineInfo.minDate);
     let maxDate = new Date(airlineInfo.maxDate);

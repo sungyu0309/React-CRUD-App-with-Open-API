@@ -11,26 +11,26 @@ export default function AirlineListsComponent() {
     return Math.floor(Math.random() * 100) + 1;
   };
 
-  return (
-    searchedAirline && (
-      <AllListContainer>
-        <Vertical>
-          {searchedAirline.map((itm) => (
-            <Horizontal
-              key={
-                itm.domesticNum +
-                itm.date +
-                itm.domesticStartTime +
-                getRandomNum()
-              }
-            >
-              {itm.airlineKorean} : 출발시간 - {itm.domesticStartTime}, 도착시간
-              -{itm.domesticArrivalTime}
-            </Horizontal>
-          ))}
-        </Vertical>
-      </AllListContainer>
-    )
+  return Array.isArray(searchedAirline) ? (
+    <AllListContainer>
+      <Vertical>
+        {searchedAirline.map((itm) => (
+          <Horizontal
+            key={
+              itm.domesticNum +
+              itm.date +
+              itm.domesticStartTime +
+              getRandomNum()
+            }
+          >
+            {itm.airlineKorean} : 출발시간 - {itm.domesticStartTime}, 도착시간 -
+            {itm.domesticArrivalTime}
+          </Horizontal>
+        ))}
+      </Vertical>
+    </AllListContainer>
+  ) : (
+    <div>항공편이 존재하지 않습니다</div>
   );
 }
 
