@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import MyPage from "./pages/MyPage";
 import { GlobalStyle } from "./styles/GlobalStyle";
@@ -20,14 +20,8 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <>
-    <RecoilRoot>
-      {/* <React.StrictMode> */}
-      <GlobalStyle />
-      <RouterProvider router={router}>
-        <Outlet />
-      </RouterProvider>
-      {/* </React.StrictMode> */}
-    </RecoilRoot>
-  </>
+  <RecoilRoot>
+    <GlobalStyle />
+    <RouterProvider router={router} />
+  </RecoilRoot>
 );
