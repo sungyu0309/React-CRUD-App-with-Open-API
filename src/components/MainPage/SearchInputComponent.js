@@ -74,7 +74,7 @@ export default function SearchInputComponent({ type, setAirport, closeModal }) {
   // 삭제 버튼을 누르면, inputValue를 초기화
 
   return (
-    <div className="autocomplete-wrapper">
+    <div className="autocomplete-wrapper" style={{ width: "100%" }}>
       <InputContainer>
         <input onChange={handleInputChange} value={inputValue} />
         <div className="delete-button" onClick={handleDeleteButtonClick}>

@@ -40,11 +40,18 @@ export default function LoadBtnComponent({ airlineInfo }) {
           const newArr = response.map(({ totalCount, ...rest }) => ({
             ...rest,
             date: newDate,
+            arriveCode: airlineInfo.arriveCode,
+            departCode: airlineInfo.departCode,
           }));
           setSearchedAirline((prev) => [...prev, ...newArr]);
         } else if (typeof response === "object") {
           const { totalCount, ...newArr } = response;
-          setSearchedAirline((prev) => [...prev, newArr]);
+          const arr = {
+            arriveCode: airlineInfo.arriveCode,
+            departCode: airlineInfo.departCode,
+            ...newArr,
+          };
+          setSearchedAirline((prev) => [...prev, arr]);
         }
 
         if (response && response[0]?.totalCount - pageNo * 10 < 0) break;
@@ -68,11 +75,18 @@ export default function LoadBtnComponent({ airlineInfo }) {
           const newArr = response.map(({ totalCount, ...rest }) => ({
             ...rest,
             date: newDate,
+            arriveCode: airlineInfo.arriveCode,
+            departCode: airlineInfo.departCode,
           }));
           setSearchedAirline((prev) => [...prev, ...newArr]);
         } else if (typeof response === "object") {
           const { totalCount, ...newArr } = response;
-          setSearchedAirline((prev) => [...prev, newArr]);
+          const arr = {
+            arriveCode: airlineInfo.arriveCode,
+            departCode: airlineInfo.departCode,
+            ...newArr,
+          };
+          setSearchedAirline((prev) => [...prev, arr]);
         }
 
         if (response && response[0]?.totalCount - pageNo * 10 < 0) break;
@@ -107,8 +121,10 @@ const LoadBtn = styled.button`
   color: white;
   border: 1px solid rgb(100, 100, 200);
   border-radius: 4px;
-  width: 80px;
-  height: 30px;
+  width: 130px;
+  height: 60px;
+  font-size: 20px;
+  cursor: pointer;
 `;
 
 const domesticAiportCodes = [

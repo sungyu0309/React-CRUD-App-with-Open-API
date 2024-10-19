@@ -2,7 +2,11 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import SearchModalComponent from "./SearchModalComponent";
 import SearchInputComponent from "./SearchInputComponent";
-import { Horizontal, Vertical } from "../../styles/CommunalStyle";
+import {
+  Horizontal,
+  NoCenterVertical,
+  Vertical,
+} from "../../styles/CommunalStyle";
 import DateInputComponent from "./DateInputComponent";
 import LoadBtnComponent from "./LoadBtnComponent";
 
@@ -46,61 +50,70 @@ export default function AirlineSearchComponent() {
     setAirlineInfo((prev) => ({ ...prev, ...newArr }));
   };
   return (
-    <Horizontal style={{ marginTop: "30px", justifyContent: "center" }}>
-      {showModal && (
-        <SearchModalComponent
-          closeModal={() => setShowModal(false)}
-          position={componentPosition}
-        >
-          <SearchInputComponent
-            type={componentPosition.type}
-            setAirport={setAirlineInfo}
+    <Wrapper>
+      <Horizontal style={{ marginTop: "30px", justifyContent: "center" }}>
+        {showModal && (
+          <SearchModalComponent
             closeModal={() => setShowModal(false)}
+            position={componentPosition}
+          >
+            <SearchInputComponent
+              type={componentPosition.type}
+              setAirport={setAirlineInfo}
+              closeModal={() => setShowModal(false)}
+            />
+          </SearchModalComponent>
+        )}
+        <LocationContainer>
+          <LocationBtn
+            id="depart"
+            onClick={() => handleLocationBtnClick("depart")}
+            ref={departBtnRef}
+          >
+            <Vertical>
+              <span className="departCode">{airlineInfo.departCode}</span>
+              <span>{airlineInfo.departAirport}</span>
+            </Vertical>
+          </LocationBtn>
+          <ChangeBtn id="exchange" onClick={handleChangeBtnClick}>
+            <i className="fa fa-exchange" />
+          </ChangeBtn>
+          <LocationBtn
+            id="arrive"
+            onClick={() => handleLocationBtnClick("arrive")}
+            ref={arriveBtnRef}
+          >
+            <Vertical>
+              <span className="departCode">{airlineInfo.arriveCode}</span>
+              <span>{airlineInfo.arriveAirport}</span>
+            </Vertical>
+          </LocationBtn>
+        </LocationContainer>
+        <DateContainer>
+          <p>출발일</p>
+          <DateInputComponent
+            currentdate={airlineInfo}
+            setCurrentDate={setAirlineInfo}
           />
-        </SearchModalComponent>
-      )}
-      <LocationContainer>
-        <LocationBtn
-          id="depart"
-          onClick={() => handleLocationBtnClick("depart")}
-          ref={departBtnRef}
-        >
-          <Vertical>
-            <span className="departCode">{airlineInfo.departCode}</span>
-            <span>{airlineInfo.departAirport}</span>
-          </Vertical>
-        </LocationBtn>
-        <ChangeBtn id="exchange" onClick={handleChangeBtnClick}>
-          <i className="fa fa-exchange" />
-        </ChangeBtn>
-        <LocationBtn
-          id="arrive"
-          onClick={() => handleLocationBtnClick("arrive")}
-          ref={arriveBtnRef}
-        >
-          <Vertical>
-            <span className="departCode">{airlineInfo.arriveCode}</span>
-            <span>{airlineInfo.arriveAirport}</span>
-          </Vertical>
-        </LocationBtn>
-      </LocationContainer>
-      <DateContainer>
-        <p>출발일자 선택</p>
-        <DateInputComponent
-          currentdate={airlineInfo}
-          setCurrentDate={setAirlineInfo}
-        />
-      </DateContainer>
-      <LoadBtnContainer>
-        <LoadBtnComponent airlineInfo={airlineInfo} />
-      </LoadBtnContainer>
-    </Horizontal>
+        </DateContainer>
+        <LoadBtnContainer>
+          <LoadBtnComponent airlineInfo={airlineInfo} />
+        </LoadBtnContainer>
+      </Horizontal>
+    </Wrapper>
   );
 }
 
+const Wrapper = styled.div`
+  width: 90%;
+  margin-top: 30px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+`;
+
 const LocationContainer = styled(Horizontal)`
   width: 30%;
-  border: 1px solid red;
   height: 100px;
   justify-content: center;
 `;
@@ -137,14 +150,21 @@ const ChangeBtn = styled.button`
   }
 `;
 
-const DateContainer = styled.div`
+const DateContainer = styled(NoCenterVertical)`
   width: 40%;
-  border: 1px solid blue;
+  padding: 0 20px;
   height: 100px;
+
+  > p {
+    margin: 0;
+    color: gray;
+  }
 `;
 
 const LoadBtnContainer = styled.div`
   width: 20%;
   height: 100px;
-  border: 1px solid green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
