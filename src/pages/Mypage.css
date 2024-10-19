@@ -2,16 +2,17 @@
 .scroll-container {
   padding: 20px;
   background-color: #f4f4f9;
-  height: 100vh; /* 전체 화면 높이를 차지하도록 설정 */
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100vw; /* 부모 컨테이너가 전체 너비를 차지하도록 강제 */
 }
 
 .header {
   text-align: center;
   background-color: #f4f4f9;
   z-index: 100;
-  position: relative; /* header는 고정된 높이를 갖도록 설정 */
+  position: relative;
 }
 
 .header h1 {
@@ -28,52 +29,97 @@
 
 /* 카드 리스트가 스크롤되는 영역 */
 .card-scroll-area {
-  flex-grow: 1; /* 남은 공간을 모두 차지하도록 설정 */
-  overflow-x: auto; /* 가로 스크롤 적용 */
-  white-space: nowrap; /* 카드가 가로로 나열되도록 설정 */
-  padding-bottom: 20px;
+  flex-grow: 1;
+  overflow-x: auto; /* 가로 스크롤 활성화 */
+  white-space: nowrap; /* 카드가 한 줄에 나열되도록 설정 */
   display: flex;
   gap: 20px; /* 카드 간의 간격 */
+  padding-bottom: 20px;
+  max-width: 100vw;
 }
 
 /* 개별 카드 스타일 */
 .card {
   display: inline-block;
-  border: 1px solid #ccc;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: white;
-  width: 220px;
+
+  margin-top: 20px;
+  margin-left: 20px;
+  width: 300px; /* 가로 크기 고정 */
+  height: 350px;
+  padding: 20px;
   text-align: center;
-  padding: 10px;
+  position: relative;
+  background-size: cover; /* 이미지가 카드 크기에 맞게 확대되거나 축소 */
+  background-position: center;
+  background-repeat: no-repeat;
   transition: transform 0.2s ease-in-out;
+  flex-shrink: 0; /* flex 컨테이너 내에서 크기가 줄어들지 않도록 설정 */
 }
 
 .card:hover {
-  transform: scale(1.05); /* 마우스를 올렸을 때 확대 효과 */
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.card-image {
+/* 카드 내용에 반투명 배경 추가 */
+.card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.6); /* 검정색 반투명 배경 */
+  color: white;
+  padding: 10px;
+  box-sizing: border-box;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 .card-title {
-  color: #d2691e;
   font-size: 1.3rem;
   margin: 10px 0;
 }
 
 .card-info {
-  color: #555;
   font-size: 1rem;
   margin: 5px 0;
 }
 
 .card-description {
-  color: #777;
   font-size: 0.9rem;
   margin-top: 10px;
+}
+
+/* 수정 및 삭제 버튼 스타일 */
+.card-buttons {
+  display: none; /* 기본적으로 숨김 */
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.card:hover .card-buttons {
+  display: flex; /* 카드에 마우스를 올렸을 때 버튼 보이기 */
+}
+
+.button {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.button.edit {
+  background-color: #4caf50; /* 수정 버튼은 초록색 */
+}
+
+.button:hover {
+  opacity: 0.8; /* 마우스를 올렸을 때 버튼 투명도 변화 */
 }

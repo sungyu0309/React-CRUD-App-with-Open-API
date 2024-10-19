@@ -6,23 +6,23 @@ export const Container = styled.div`
   justify-content: center;
   margin-top: 30px;
   width: 100%;
+  flex-wrap: wrap; /* 자식 요소가 넘칠 때 자동으로 줄바꿈 */
 `;
 
 export const Horizontal = styled.div`
-  //가로 정렬
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between; /* 카드 간격을 일정하게 */
   width: 100%;
 `;
+
 export const NoCenterHorizontal = styled.div`
-  //가로 정렬
   display: flex;
   align-items: center;
   width: 100%;
 `;
+
 export const Vertical = styled.div`
-  //세로 정렬
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,7 +37,6 @@ export const WrapContainer = styled.div`
 `;
 
 export const NoCenterVertical = styled.div`
-  //세로 정렬
   display: flex;
   flex-direction: column;
   justify-content: center;
