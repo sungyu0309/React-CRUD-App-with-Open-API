@@ -29,18 +29,35 @@ export const getDomesticAirline = async (pageNo, date, airlineInfo) => {
     const fullUrl = `${url}?ServiceKey=${serviceKey}&pageNo=${pageNo}&schDate=${date}&schArrvCityCode=${airlineInfo.arriveCode}&schDeptCityCode=${airlineInfo.departCode}`;
 
     const response = await axios.get(fullUrl);
+    if (response.data.response.header.resultCode === 99) {
+      console.log("트래픽 초과");
+      return "트래픽초과";
+    }
     if (response.data.response.body.items) {
       const items = response.data.response.body.items.item;
-      const newArr = items.map((itm) => ({
-        domesticStartTime: itm.domesticStartTime,
-        domesticArrivalTime: itm.domesticArrivalTime,
-        domesticNum: itm.domesticNum,
-        startcity: itm.startcity,
-        arrivalcity: itm.arrivalcity,
-        airlineKorean: itm.airlineKorean,
-        totalCount: response.data.response.body.totalCount,
-      }));
-      return newArr;
+      if (Array.isArray(items)) {
+        const newArr = items.map((itm) => ({
+          domesticStartTime: itm.domesticStartTime,
+          domesticArrivalTime: itm.domesticArrivalTime,
+          domesticNum: itm.domesticNum,
+          startcity: itm.startcity,
+          arrivalcity: itm.arrivalcity,
+          airlineKorean: itm.airlineKorean,
+          totalCount: response.data.response.body.totalCount,
+        }));
+        return newArr;
+      } else if (items && typeof items === "object") {
+        const newArr = {
+          domesticStartTime: items.domesticStartTime,
+          domesticArrivalTime: items.domesticArrivalTime,
+          domesticNum: items.domesticNum,
+          startcity: items.startcity,
+          arrivalcity: items.arrivalcity,
+          airlineKorean: items.airlineKorean,
+          totalCount: response.data.response.body.totalCount,
+        };
+        return newArr;
+      }
     }
     return undefined;
   } catch (err) {
@@ -56,17 +73,33 @@ export const getInternationalAirline = async (pageNo, date, airlineInfo) => {
     const fullUrl = `${url}?ServiceKey=${serviceKey}&pageNo=${pageNo}&schDate=${date}&schArrvCityCode=${airlineInfo.arriveCode}&schDeptCityCode=${airlineInfo.departCode}`;
 
     const response = await axios.get(fullUrl);
+    if (response.data.response.header.resultCode === 99) {
+      console.log("트래픽 초과");
+      return "트래픽초과";
+    }
     if (response.data.response.body.items) {
       const items = response.data.response.body.items.item;
-      const newArr = items.map((itm) => ({
-        internationalTime: itm.internationalTime,
-        internationalNum: itm.internationalNum,
-        startcity: itm.airport,
-        arrivalcity: itm.city,
-        airlineKorean: itm.airlineKorean,
-        totalCount: response.data.response.body.totalCount,
-      })); // 국제선인경우 도착 시간 X
-      return newArr;
+      if (Array.isArray(items)) {
+        const newArr = items.map((itm) => ({
+          internationalTime: itm.internationalTime,
+          internationalNum: itm.internationalNum,
+          startcity: itm.airport,
+          arrivalcity: itm.city,
+          airlineKorean: itm.airlineKorean,
+          totalCount: response.data.response.body.totalCount,
+        })); // 국제선인경우 도착 시간 X
+        return newArr;
+      } else if (items && typeof items === "object") {
+        const newArr = {
+          internationalTime: items.internationalTime,
+          internationalNum: items.internationalNum,
+          startcity: items.airport,
+          arrivalcity: items.city,
+          airlineKorean: items.airlineKorean,
+          totalCount: response.data.response.body.totalCount,
+        }; // 국제선인경우 도착 시간 X
+        return newArr;
+      }
     }
     return undefined;
   } catch (err) {
