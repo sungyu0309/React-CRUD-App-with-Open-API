@@ -16,9 +16,11 @@ export default function SearchModalComponent(props) {
         <CloseBtn onClick={closeModal}>
           <i className="fa fa-close" style={{ fontSize: "20px" }}></i>
         </CloseBtn>
-        <h3 style={{ marginTop: "10px" }}>
-          {props.position.type === "depart" ? "출발지 검색" : "도착지 검색"}
-        </h3>
+        {props.position.type && (
+          <h3 style={{ marginTop: "10px" }}>
+            {props.position.type === "depart" ? "출발지 검색" : "도착지 검색"}
+          </h3>
+        )}
         {props.children}
       </Modal>
     </ModalWrapper>
@@ -47,6 +49,10 @@ const Modal = styled.div`
   background-color: rgb(255, 255, 255);
   border-radius: 8px;
   box-shadow: 0 4px 6px rgb(32 33 36 / 28%);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const CloseBtn = styled.button`

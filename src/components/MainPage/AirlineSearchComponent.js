@@ -86,7 +86,10 @@ export default function AirlineSearchComponent() {
       </LocationContainer>
       <DateContainer>
         <p>출발일자 선택</p>
-        <DateInputComponent setDate={setAirlineInfo} />
+        <DateInputComponent
+          currentdate={airlineInfo}
+          setCurrentDate={setAirlineInfo}
+        />
       </DateContainer>
       <LoadBtnContainer>
         <LoadBtnComponent airlineInfo={airlineInfo} />
