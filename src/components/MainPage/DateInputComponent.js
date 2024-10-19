@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Horizontal, Vertical } from "../../styles/CommunalStyle";
+import { Horizontal } from "../../styles/CommunalStyle";
 import styled from "styled-components";
 
 export default function DateInputComponent({ setDate }) {
@@ -32,14 +32,17 @@ export default function DateInputComponent({ setDate }) {
     return result.toISOString().split("T")[0]; // yyyy-mm-dd 형식으로 반환
   };
   return (
-    <Vertical>
+    <Horizontal className="date_picker">
       <DateInput
         type="date"
         id="minDate"
         min={inputValue.maxDate ? subDays(inputValue.maxDate, 7) : null}
         max={inputValue.maxDate}
         value={inputValue.minDate}
+        placeholder="날짜를 선택해주세요"
         onChange={handleInputChange}
+        required
+        aria-required="true"
       />
       <span>~</span>
       <DateInput
@@ -47,10 +50,13 @@ export default function DateInputComponent({ setDate }) {
         id="maxDate"
         min={inputValue.minDate}
         max={inputValue.minDate ? addDays(inputValue.minDate, 7) : null}
+        placeholder="날짜를 선택해주세요"
         value={inputValue.maxDate}
         onChange={handleInputChange}
+        required
+        aria-required="true"
       />
-    </Vertical>
+    </Horizontal>
   );
 }
 

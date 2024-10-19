@@ -76,7 +76,7 @@ export default function SearchInputComponent({ type, setAirport, closeModal }) {
   return (
     <div className="autocomplete-wrapper">
       <InputContainer>
-        <input onChange={handleInputChange} value={inputValue}></input>
+        <input onChange={handleInputChange} value={inputValue} />
         <div className="delete-button" onClick={handleDeleteButtonClick}>
           &times;
         </div>
@@ -95,7 +95,8 @@ const DropDown = ({ options, handleComboBox, selected }) => {
       {options.map((option, index) => {
         return (
           <li key={index} onClick={() => handleComboBox(option)}>
-            {option.kor} ({option.code})
+            <span className="code">{option.code}</span>
+            <span>{option.kor}</span>
           </li>
         );
       })}
@@ -104,7 +105,6 @@ const DropDown = ({ options, handleComboBox, selected }) => {
 };
 
 const boxShadow = "0 4px 6px rgb(32 33 36 / 28%)";
-const inactiveBorderRadius = "1rem 1rem 1rem 1rem";
 
 const DropDownContainer = styled.ul`
   max-height: 100px;
@@ -119,35 +119,49 @@ const DropDownContainer = styled.ul`
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   padding-inline-start: 0px;
-  margin-top: -1px;
-  padding: 0.5rem 0;
+  margin-top: 5px;
   border: 1px solid rgb(223, 225, 229);
-  border-radius: 0 0 1rem 1rem;
+  /* border-radius: 8px; */
   box-shadow: ${boxShadow};
+
   z-index: 3;
 
   > li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     padding: 0 1rem;
+    border-bottom: 0.5px solid gray;
+    padding: 10px;
+    cursor: pointer;
 
     &.selected {
       background-color: lightgray;
+    }
+    > span {
+      font-size: 12px;
+    }
+    > .code {
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 10px;
     }
   }
 `;
 
 export const InputContainer = styled.div`
-  margin-top: 4rem;
+  margin-top: 30px;
   background-color: #ffffff;
   display: flex;
   flex-direction: row;
   padding: 1rem;
   border: 1px solid rgb(223, 225, 229);
-  border-radius: ${inactiveBorderRadius};
+  border-radius: 8px;
   z-index: 3;
   box-shadow: 0;
 
   &:focus-within {
-    box-shadow: ${boxShadow};
+    border: 2px solid rgb(100, 100, 200);
   }
 
   > input {
@@ -158,6 +172,9 @@ export const InputContainer = styled.div`
     padding: 0;
     outline: none;
     font-size: 16px;
+    &:focus {
+      outline: rgb(100, 100, 200);
+    }
   }
 
   > div.delete-button {

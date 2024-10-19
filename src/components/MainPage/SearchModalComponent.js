@@ -16,9 +16,9 @@ export default function SearchModalComponent(props) {
         <CloseBtn onClick={closeModal}>
           <i className="fa fa-close" style={{ fontSize: "20px" }}></i>
         </CloseBtn>
-        <h4 style={{ marginTop: "10px" }}>
+        <h3 style={{ marginTop: "10px" }}>
           {props.position.type === "depart" ? "출발지 검색" : "도착지 검색"}
-        </h4>
+        </h3>
         {props.children}
       </Modal>
     </ModalWrapper>
@@ -26,7 +26,7 @@ export default function SearchModalComponent(props) {
 }
 
 const ModalWrapper = styled.div`
-  position: relative;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 4;
@@ -36,17 +36,17 @@ const ModalWrapper = styled.div`
 `;
 
 const Modal = styled.div`
-  border: 1px solid black;
-  top: ${(props) => `${props.top + 30}px` || "0px"};
-  left: ${(props) => `${props.left - 30}px` || "0px"};
+  border: 0.1px solid gray;
+  top: ${(props) => `${props.top + 90}px` || "0px"};
+  left: ${(props) => `${props.left - 10}px` || "0px"};
   position: absolute;
-  width: 300px;
+  width: 400px;
   height: 200px;
   padding: 40px;
   text-align: center;
   background-color: rgb(255, 255, 255);
-  border-radius: 40px;
-  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgb(32 33 36 / 28%);
 `;
 
 const CloseBtn = styled.button`
