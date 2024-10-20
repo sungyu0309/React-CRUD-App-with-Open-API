@@ -93,7 +93,6 @@ export default function MakeTripComponent({ airlineInfo, closeModal }) {
               style={{ display: "none" }}
               type="file"
               id="photo"
-              multiple
               accept="image/*"
               onChange={(e) => readURL(e)}
             />
