@@ -66,6 +66,7 @@ export default function CalenderComponent(props) {
     }
 
     setLimitDate(newArr);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
