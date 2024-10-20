@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from "../../imgs/image.svg";
 import { Horizontal, Vertical } from "../../styles/CommunalStyle";
+import axios from "axios";
 
-export default function MakeTripComponent({ airlineInfo }) {
+export default function MakeTripComponent({ airlineInfo, closeModal }) {
   const [imgArr, setImgArr] = useState([]);
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
@@ -34,14 +35,39 @@ export default function MakeTripComponent({ airlineInfo }) {
   };
 
   const handleSubmitBtn = () => {
+    const newImgArr = imgArr.map((itm) => itm.src);
     const newArr = {
       title: title,
       memo: contents,
-      imgs: imgArr,
+      pic: newImgArr,
+      Departure: airlineInfo.startcity,
+      Arrival: airlineInfo.arrivalcity,
+      DepartureTime: airlineInfo.domesticStartTime
+        ? airlineInfo.domesticStartTime
+        : airlineInfo.internationalTime,
+      ArrivalTime: airlineInfo.domesticArrivalTime
+        ? airlineInfo.domesticArrivalTime
+        : "TBC",
+      DepartureCode: airlineInfo.departCode,
+      ArrivalCode: airlineInfo.arriveCode,
+      AirlineName: airlineInfo.airlineKorean,
     };
-    console.log(newArr); // console.log 대신 axios post 코드 작성
+
+    axios
+      .post(
+        "https://670731a0a0e04071d2296047.mockapi.io/flight/wanderAir",
+        newArr
+      )
+      .then((response) => {
+        closeModal();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     console.log(airlineInfo);
+    console.log("new Data : ", newArr);
   };
+
   return (
     <Vertical style={{ marginTop: "40px" }}>
       <Title
@@ -81,7 +107,7 @@ export default function MakeTripComponent({ airlineInfo }) {
         value={contents}
         onChange={(e) => setContents(e.target.value)}
       />
-      <button onClick={handleSubmitBtn}>Add</button>
+      <SubmitBtn onClick={handleSubmitBtn}>Add</SubmitBtn>
     </Vertical>
   );
 }
@@ -136,7 +162,7 @@ const LabelForPhoto = styled.label`
 
 const ImagesContainer = styled.div`
   overflow-x: auto;
-  margin: 20px 0;
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -163,4 +189,15 @@ const ImgWrapper = styled.div`
     background-color: beige;
     border-radius: 2px;
   }
+`;
+
+const SubmitBtn = styled.button`
+  margin-top: 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  border: 1px solid rgb(100, 100, 200);
+  background-color: rgb(100, 100, 200);
+  color: white;
+  width: 60%;
+  height: 40px;
 `;

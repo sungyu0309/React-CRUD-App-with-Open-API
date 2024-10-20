@@ -3,7 +3,6 @@ import { Horizontal, Vertical } from "../../styles/CommunalStyle";
 import SearchModalComponent from "./SearchModalComponent";
 import CalenderComponent from "./CalenderComponent";
 import styled from "styled-components";
-import CalendarImg from "../../imgs/calender.svg";
 
 export default function DateInputComponent({ currentdate, setCurrentDate }) {
   const [componentPosition, setComponentPosition] = useState({

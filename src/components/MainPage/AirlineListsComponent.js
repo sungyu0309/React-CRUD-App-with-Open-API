@@ -40,7 +40,10 @@ export default function AirlineListsComponent() {
     <>
       {showModal && (
         <ModalComponent closeModal={() => setShowModal(false)}>
-          <MakeTripComponent airlineInfo={selectedAirline} />
+          <MakeTripComponent
+            airlineInfo={selectedAirline}
+            closeModal={() => setShowModal(false)}
+          />
         </ModalComponent>
       )}
       <AllListContainer>
