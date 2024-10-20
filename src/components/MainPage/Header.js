@@ -4,13 +4,14 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 export default function Header() {
-  const navitate = useNavigate();
+  const navigate = useNavigate(); // navigate 함수로 수정
+
   return (
     <Wrapper>
       <Logo>WanderAir</Logo>
       <BtnContainer>
-        <NavigateBtn onClick={navitate("/")}>Main</NavigateBtn>
-        <NavigateBtn>My Page</NavigateBtn>
+        <NavigateBtn onClick={() => navigate("/")}>Main</NavigateBtn> {/* 함수 호출을 이벤트로 감싸기 */}
+        <NavigateBtn onClick={() => navigate("/mypage")}>My Page</NavigateBtn> {/* My Page 이동 */}
       </BtnContainer>
     </Wrapper>
   );

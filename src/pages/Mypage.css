@@ -35,7 +35,7 @@
   margin-bottom: 10px;
 }
 .header h2 {
-  color: #e99953; /* 진한 주황색 */
+  color: #ff7700; /* 진한 주황색 */
   font-size: 2rem; /* 크기 키움 */
   font-weight: bold; /* 볼드 처리 */
   margin-bottom: 10px;
@@ -43,7 +43,7 @@
 }
 
 .header p {
-  color: #e99953; /* 진한 주황색 */
+  color: #ff7700; /* 진한 주황색 */
   font-size: 1.5rem;
   margin-bottom: 30px; /* 카드들과 간격을 유지 */
 }
