@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { searchedAirlineState } from "../../store/atom";
 import { Horizontal, Vertical } from "../../styles/CommunalStyle";
@@ -12,12 +12,14 @@ import CalenderImg from "../../imgs/calender.svg";
 export default function AirlineListsComponent() {
   const searchedAirline = useRecoilValue(searchedAirlineState);
   const [showModal, setShowModal] = useState(false);
+  const [selectedAirline, setSelectedAirline] = useState("");
 
   const getRandomNum = () => {
     return Math.floor(Math.random() * 100) + 1;
   };
 
-  const handleMakeBtnClick = () => {
+  const handleMakeBtnClick = (airline) => {
+    setSelectedAirline(airline);
     setShowModal(true);
   };
 
@@ -38,7 +40,7 @@ export default function AirlineListsComponent() {
     <>
       {showModal && (
         <ModalComponent closeModal={() => setShowModal(false)}>
-          <MakeTripComponent />
+          <MakeTripComponent airlineInfo={selectedAirline} />
         </ModalComponent>
       )}
       <AllListContainer>
@@ -85,7 +87,9 @@ export default function AirlineListsComponent() {
                     <span className="code">{itm.arriveCode}</span>
                   </Vertical>
                 </Horizontal>
-                <button onClick={handleMakeBtnClick}>여행 만들기</button>
+                <MakeTripBtn onClick={() => handleMakeBtnClick(itm)}>
+                  여행 만들기
+                </MakeTripBtn>
               </ListContainer>
             ) : (
               <ListContainer
@@ -126,7 +130,7 @@ export default function AirlineListsComponent() {
                     <span className="code">{itm.arriveCode}</span>
                   </Vertical>
                 </Horizontal>
-                <MakeTripBtn onClick={handleMakeBtnClick}>
+                <MakeTripBtn onClick={() => handleMakeBtnClick(itm)}>
                   여행 만들기
                 </MakeTripBtn>
               </ListContainer>
@@ -212,4 +216,5 @@ const MakeTripBtn = styled.button`
   background-color: rgb(100, 100, 200);
   color: white;
   border: 1px solid rgb(100, 100, 200);
+  cursor: pointer;
 `;

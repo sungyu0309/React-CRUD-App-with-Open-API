@@ -49,6 +49,14 @@ export default function AirlineSearchComponent() {
     };
     setAirlineInfo((prev) => ({ ...prev, ...newArr }));
   };
+
+  const handleResetBtnClick = () => {
+    setAirlineInfo((prev) => ({
+      ...prev,
+      minDate: "",
+      maxDate: "",
+    }));
+  };
   return (
     <Wrapper>
       <Horizontal style={{ marginTop: "30px", justifyContent: "center" }}>
@@ -90,7 +98,12 @@ export default function AirlineSearchComponent() {
           </LocationBtn>
         </LocationContainer>
         <DateContainer>
-          <p>출발일</p>
+          <Horizontal style={{ justifyContent: "flex-start" }}>
+            <p>출발일</p>
+            <button onClick={handleResetBtnClick}>
+              <i className="fa fa-refresh" />
+            </button>
+          </Horizontal>
           <DateInputComponent
             currentdate={airlineInfo}
             setCurrentDate={setAirlineInfo}
@@ -126,6 +139,7 @@ const LocationBtn = styled.button`
   background-color: white;
   width: calc((100% - 50px) / 2);
   cursor: pointer;
+
   &:hover {
     border: 1px solid rgb(100, 100, 200);
   }
@@ -155,9 +169,29 @@ const DateContainer = styled(NoCenterVertical)`
   padding: 0 20px;
   height: 100px;
 
-  > p {
-    margin: 0;
-    color: gray;
+  > div {
+    > p {
+      margin: 0;
+      color: gray;
+      margin-right: 20px;
+    }
+
+    > button {
+      border: none;
+      cursor: pointer;
+      background-color: white;
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+
+      &:hover {
+        border: 1px solid rgb(100, 100, 200);
+      }
+
+      > i {
+        font-size: 18px;
+      }
+    }
   }
 `;
 
