@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { searchedAirlineState } from "../../store/atom";
 import { Horizontal, Vertical } from "../../styles/CommunalStyle";
@@ -36,7 +36,11 @@ export default function AirlineListsComponent() {
     return month + day;
   };
 
-  return Array.isArray(searchedAirline) ? (
+  useEffect(() => {
+    console.log(searchedAirline);
+  }, [searchedAirline]);
+
+  return Array.isArray(searchedAirline) && searchedAirline.length > 0 ? (
     <>
       {showModal && (
         <ModalComponent closeModal={() => setShowModal(false)}>
@@ -143,14 +147,17 @@ export default function AirlineListsComponent() {
       </AllListContainer>
     </>
   ) : (
-    <div>항공편이 존재하지 않습니다</div>
+    <NoAirlineWrapper>
+      <h2>There is No Airline</h2>
+      <h2>Search for another airport, please</h2>
+    </NoAirlineWrapper>
   );
 }
 
 const AllListContainer = styled.div`
   width: 90%;
-  margin-top: 20px;
-  height: 300px;
+  margin-top: 40px;
+  height: 450px;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 10px;
@@ -161,11 +168,12 @@ const AllListContainer = styled.div`
 
 const ListContainer = styled(Horizontal)`
   /* box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1); */
-  margin: 20px;
+  margin: 10px;
   border: 1px solid black;
   height: 80px;
   padding: 20px;
   border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.7);
 
   .time {
     font-size: 25px;
@@ -216,8 +224,21 @@ const MakeTripBtn = styled.button`
   font-size: 16px;
   line-height: 30px;
   border-radius: 8px;
-  background-color: rgb(100, 100, 200);
+  background-color: #e99953;
   color: white;
-  border: 1px solid rgb(100, 100, 200);
+  border: 1px solid #e99953;
   cursor: pointer;
+`;
+
+const NoAirlineWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 450px;
+  justify-content: center;
+
+  > h2 {
+    font-size: 50px;
+    color: #e99953;
+  }
 `;

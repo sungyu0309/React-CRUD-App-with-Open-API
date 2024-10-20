@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Image from "../../imgs/image.svg";
 import { Horizontal, Vertical } from "../../styles/CommunalStyle";
 import axios from "axios";
+import { useForm } from "react-hook-form";
 
 export default function MakeTripComponent({ airlineInfo, closeModal }) {
   const [imgArr, setImgArr] = useState([]);
-  const [title, setTitle] = useState("");
-  const [contents, setContents] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const getRandomNum = () => {
     return Math.floor(Math.random() * 100) + 1;
@@ -34,11 +40,12 @@ export default function MakeTripComponent({ airlineInfo, closeModal }) {
     setImgArr(newArr);
   };
 
-  const handleSubmitBtn = () => {
+  const onSubmit = (data) => {
+    setLoading(true);
     const newImgArr = imgArr.map((itm) => itm.src);
     const newArr = {
-      title: title,
-      memo: contents,
+      title: data.title,
+      memo: data.memo,
       pic: newImgArr,
       Departure: airlineInfo.startcity,
       Arrival: airlineInfo.arrivalcity,
@@ -62,52 +69,59 @@ export default function MakeTripComponent({ airlineInfo, closeModal }) {
         closeModal();
       })
       .catch((err) => {
-        console.log(err);
+        alert("사진의 크기가 너무 큽니다! 200kb 미만의 사진만 추가해주세요");
       });
-    console.log(airlineInfo);
-    console.log("new Data : ", newArr);
   };
 
   return (
     <Vertical style={{ marginTop: "40px" }}>
-      <Title
-        placeholder="제목"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <Horizontal style={{ justifyContent: "flex-start" }}>
-        <LabelForPhoto htmlFor="photo">
-          <div>
-            <img src={Image} alt="p" />
-          </div>
-        </LabelForPhoto>
-        <input
-          style={{ display: "none" }}
-          type="file"
-          id="photo"
-          multiple
-          accept="image/*"
-          onChange={(e) => readURL(e)}
-        />
-        <ImagesContainer>
-          {imgArr.map((itm) => (
-            <ImgWrapper key={itm.id}>
-              <i
-                className="fa fa-close"
-                style={{ fontSize: "15px" }}
-                onClick={() => deleteImg(itm.id)}
-              />
-              <img src={itm.src} alt="img" />
-            </ImgWrapper>
-          ))}
-        </ImagesContainer>
-      </Horizontal>
-      <Content
-        placeholder="메모"
-        value={contents}
-        onChange={(e) => setContents(e.target.value)}
-      />
-      <SubmitBtn onClick={handleSubmitBtn}>Add</SubmitBtn>
+      {!loading ? (
+        <form onSubmit={handleSubmit(onSubmit)} style={{ width: "70%" }}>
+          <Title
+            placeholder="제목"
+            {...register("title", { required: true })}
+          />
+          {errors.title && <p>Title is required</p>}
+
+          <Horizontal style={{ justifyContent: "flex-start" }}>
+            <LabelForPhoto htmlFor="photo">
+              <div>
+                <img src={Image} alt="p" />
+              </div>
+            </LabelForPhoto>
+            <input
+              style={{ display: "none" }}
+              type="file"
+              id="photo"
+              multiple
+              accept="image/*"
+              onChange={(e) => readURL(e)}
+            />
+            <ImagesContainer>
+              {imgArr.map((itm) => (
+                <ImgWrapper key={itm.id}>
+                  <i
+                    className="fa fa-close"
+                    style={{ fontSize: "15px" }}
+                    onClick={() => deleteImg(itm.id)}
+                  />
+                  <img src={itm.src} alt="img" />
+                </ImgWrapper>
+              ))}
+            </ImagesContainer>
+          </Horizontal>
+
+          <Content
+            placeholder="메모"
+            {...register("memo", { required: true })}
+          />
+          {errors.memo && <p>Memo is required</p>}
+
+          <SubmitBtn type="submit">Add</SubmitBtn>
+        </form>
+      ) : (
+        <div>로딩중..</div>
+      )}
     </Vertical>
   );
 }
@@ -195,8 +209,8 @@ const SubmitBtn = styled.button`
   margin-top: 20px;
   border-radius: 8px;
   font-size: 20px;
-  border: 1px solid rgb(100, 100, 200);
-  background-color: rgb(100, 100, 200);
+  border: 1px solid #e99953;
+  background-color: #e99953;
   color: white;
   width: 60%;
   height: 40px;

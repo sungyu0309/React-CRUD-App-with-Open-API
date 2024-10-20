@@ -57,7 +57,7 @@ export default function DateInputComponent({ currentdate, setCurrentDate }) {
         {/* <img src={CalendarImg} alt="CalenderImg" /> */}
         {currentdate.minDate
           ? changeKorean(currentdate.minDate)
-          : "날짜를 선택해주세요"}
+          : "Choose date"}
       </DateBtn>
       <span>~</span>
       <DateBtn
@@ -67,7 +67,7 @@ export default function DateInputComponent({ currentdate, setCurrentDate }) {
       >
         {currentdate.maxDate
           ? changeKorean(currentdate.maxDate)
-          : "날짜를 선택해주세요"}
+          : "Choose date"}
       </DateBtn>
     </InputsContainer>
   );
@@ -78,12 +78,8 @@ const InputsContainer = styled(Horizontal)``;
 const DateBtn = styled.button`
   border: none;
   padding: 10px;
-  background-color: white;
   cursor: pointer;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   border-radius: 8px;
-  &:hover {
-    border: 1px solid rgb(100, 100, 200);
-  }
 `;

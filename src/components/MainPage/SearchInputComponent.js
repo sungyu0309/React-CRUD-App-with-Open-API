@@ -131,7 +131,7 @@ const DropDownContainer = styled.ul`
     flex-direction: row;
     align-items: center;
     padding: 0 1rem;
-    border-bottom: 0.5px solid gray;
+    border-bottom: 0.5px solid #e99953;
     padding: 10px;
     cursor: pointer;
 
@@ -161,7 +161,7 @@ export const InputContainer = styled.div`
   box-shadow: 0;
 
   &:focus-within {
-    border: 2px solid rgb(100, 100, 200);
+    border: 2px solid #e99953;
   }
 
   > input {
@@ -173,7 +173,7 @@ export const InputContainer = styled.div`
     outline: none;
     font-size: 16px;
     &:focus {
-      outline: rgb(100, 100, 200);
+      outline: #e99953;
     }
   }
 
