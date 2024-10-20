@@ -1,9 +1,11 @@
 import axios from "axios";
+const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+const URL = `${PROXY}`;
 
 export const getAirportCode = async (pageNo) => {
   try {
     const serviceKey = process.env.REACT_APP_API_KEY;
-    const url = "service/rest/AirportCodeList/getAirportCodeList";
+    const url = `${URL}/service/rest/AirportCodeList/getAirportCodeList`;
     const fullUrl = `${url}?ServiceKey=${serviceKey}&pageNo=${pageNo}`;
 
     const response = await axios.get(fullUrl);
