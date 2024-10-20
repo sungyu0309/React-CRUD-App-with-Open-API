@@ -2,7 +2,11 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import SearchModalComponent from "./SearchModalComponent";
 import SearchInputComponent from "./SearchInputComponent";
-import { Horizontal } from "../../styles/CommunalStyle";
+import {
+  Horizontal,
+  NoCenterVertical,
+  Vertical,
+} from "../../styles/CommunalStyle";
 import DateInputComponent from "./DateInputComponent";
 import LoadBtnComponent from "./LoadBtnComponent";
 
@@ -45,82 +49,156 @@ export default function AirlineSearchComponent() {
     };
     setAirlineInfo((prev) => ({ ...prev, ...newArr }));
   };
+
+  const handleResetBtnClick = () => {
+    setAirlineInfo((prev) => ({
+      ...prev,
+      minDate: "",
+      maxDate: "",
+    }));
+  };
   return (
-    <Horizontal style={{ marginTop: "30px" }}>
-      {showModal && (
-        <SearchModalComponent
-          closeModal={() => setShowModal(false)}
-          position={componentPosition}
-        >
-          <SearchInputComponent
-            type={componentPosition.type}
-            setAirport={setAirlineInfo}
+    <Wrapper>
+      <Horizontal style={{ marginTop: "30px", justifyContent: "center" }}>
+        {showModal && (
+          <SearchModalComponent
             closeModal={() => setShowModal(false)}
+            position={componentPosition}
+          >
+            <SearchInputComponent
+              type={componentPosition.type}
+              setAirport={setAirlineInfo}
+              closeModal={() => setShowModal(false)}
+            />
+          </SearchModalComponent>
+        )}
+        <LocationContainer>
+          <LocationBtn
+            id="depart"
+            onClick={() => handleLocationBtnClick("depart")}
+            ref={departBtnRef}
+          >
+            <Vertical>
+              <span className="departCode">{airlineInfo.departCode}</span>
+              <span>{airlineInfo.departAirport}</span>
+            </Vertical>
+          </LocationBtn>
+          <ChangeBtn id="exchange" onClick={handleChangeBtnClick}>
+            <i className="fa fa-exchange" />
+          </ChangeBtn>
+          <LocationBtn
+            id="arrive"
+            onClick={() => handleLocationBtnClick("arrive")}
+            ref={arriveBtnRef}
+          >
+            <Vertical>
+              <span className="departCode">{airlineInfo.arriveCode}</span>
+              <span>{airlineInfo.arriveAirport}</span>
+            </Vertical>
+          </LocationBtn>
+        </LocationContainer>
+        <DateContainer>
+          <Horizontal style={{ justifyContent: "flex-start" }}>
+            <p>출발일</p>
+            <button onClick={handleResetBtnClick}>
+              <i className="fa fa-refresh" />
+            </button>
+          </Horizontal>
+          <DateInputComponent
+            currentdate={airlineInfo}
+            setCurrentDate={setAirlineInfo}
           />
-        </SearchModalComponent>
-      )}
-      <LocationContainer>
-        <LocationBtn
-          id="depart"
-          onClick={() => handleLocationBtnClick("depart")}
-          ref={departBtnRef}
-        >
-          {airlineInfo.departAirport}
-        </LocationBtn>
-        <ChangeBtn id="exchange" onClick={handleChangeBtnClick}>
-          exchange
-        </ChangeBtn>
-        <LocationBtn
-          id="arrive"
-          onClick={() => handleLocationBtnClick("arrive")}
-          ref={arriveBtnRef}
-        >
-          {airlineInfo.arriveAirport}
-        </LocationBtn>
-      </LocationContainer>
-      <DateContainer>
-        <p>출발일자 선택</p>
-        <DateInputComponent setDate={setAirlineInfo} />
-      </DateContainer>
-      <LoadBtnContainer>
-        <LoadBtnComponent airlineInfo={airlineInfo} />
-      </LoadBtnContainer>
-    </Horizontal>
+        </DateContainer>
+        <LoadBtnContainer>
+          <LoadBtnComponent airlineInfo={airlineInfo} />
+        </LoadBtnContainer>
+      </Horizontal>
+    </Wrapper>
   );
 }
 
-const LocationContainer = styled.div`
-  width: 40%;
-  border: 1px solid red;
+const Wrapper = styled.div`
+  width: 90%;
+  margin-top: 30px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+`;
+
+const LocationContainer = styled(Horizontal)`
+  width: 30%;
   height: 100px;
+  justify-content: center;
 `;
 
 const LocationBtn = styled.button`
+  padding: 5px 0;
   position: relative;
   border: none;
-  border-radius: 16px;
+  border-radius: 0.2rem;
   background-color: white;
-  width: calc((100% - 30px) / 2);
+  width: calc((100% - 50px) / 2);
   cursor: pointer;
+
   &:hover {
-    border: 1px solid blue;
+    border: 1px solid rgb(100, 100, 200);
+  }
+
+  > div {
+    > .departCode {
+      font-weight: 800;
+      font-size: 23px;
+    }
   }
 `;
 
 const ChangeBtn = styled.button`
   cursor: pointer;
-  border: 1px solid blue;
+  border: 0.5px solid gray;
+  background-color: white;
   width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  &:hover {
+    border: 1px solid rgb(100, 100, 200);
+  }
 `;
 
-const DateContainer = styled.div`
-  width: 30%;
-  border: 1px solid blue;
+const DateContainer = styled(NoCenterVertical)`
+  width: 40%;
+  padding: 0 20px;
   height: 100px;
+
+  > div {
+    > p {
+      margin: 0;
+      color: gray;
+      margin-right: 20px;
+    }
+
+    > button {
+      border: none;
+      cursor: pointer;
+      background-color: white;
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+
+      &:hover {
+        border: 1px solid rgb(100, 100, 200);
+      }
+
+      > i {
+        font-size: 18px;
+      }
+    }
+  }
 `;
 
 const LoadBtnContainer = styled.div`
   width: 20%;
   height: 100px;
-  border: 1px solid green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

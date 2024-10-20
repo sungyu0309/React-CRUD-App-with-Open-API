@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import MyPage from "./pages/MyPage";
