@@ -3,12 +3,14 @@ import AirlineSearchComponent from "../components/MainPage/AirlineSearchComponen
 import AirlineListsComponent from "../components/MainPage/AirlineListsComponent";
 import { Vertical } from "../styles/CommunalStyle";
 import { Link } from "react-router-dom";
-import BackImg from "../imgs/back2.png";
+import BackImg from "../imgs/backImg.png";
 import styled from "styled-components";
+import Header from "../components/MainPage/Header";
 
 export default function MainPage() {
   return (
     <Wrapper back={BackImg}>
+      <Header />
       <div style={{ textAlign: "center", marginTop: "20px" }}>
         <Link to="/mypage">
           <button style={{ padding: "10px 20px", fontSize: "16px" }}>
