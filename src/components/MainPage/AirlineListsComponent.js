@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { searchedAirlineState } from "../../store/atom";
 import { Horizontal, Vertical } from "../../styles/CommunalStyle";
@@ -36,7 +36,11 @@ export default function AirlineListsComponent() {
     return month + day;
   };
 
-  return Array.isArray(searchedAirline) ? (
+  useEffect(() => {
+    console.log(searchedAirline);
+  }, [searchedAirline]);
+
+  return Array.isArray(searchedAirline) && searchedAirline.length > 0 ? (
     <>
       {showModal && (
         <ModalComponent closeModal={() => setShowModal(false)}>
@@ -143,7 +147,10 @@ export default function AirlineListsComponent() {
       </AllListContainer>
     </>
   ) : (
-    <div>항공편이 존재하지 않습니다</div>
+    <NoAirlineWrapper>
+      <h2>There is No Airline</h2>
+      <h2>Search for another airport, please</h2>
+    </NoAirlineWrapper>
   );
 }
 
@@ -221,4 +228,17 @@ const MakeTripBtn = styled.button`
   color: white;
   border: 1px solid #e99953;
   cursor: pointer;
+`;
+
+const NoAirlineWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 450px;
+  justify-content: center;
+
+  > h2 {
+    font-size: 50px;
+    color: #e99953;
+  }
 `;

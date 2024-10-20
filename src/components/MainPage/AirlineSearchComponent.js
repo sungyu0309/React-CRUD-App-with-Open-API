@@ -125,13 +125,14 @@ const Wrapper = styled.div`
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 1);
 `;
 
 const LocationContainer = styled(Horizontal)`
   width: 30%;
   height: 100px;
   justify-content: center;
+  border-right: 1.5px solid #e99953;
 `;
 
 const LocationBtn = styled.button`
@@ -163,14 +164,16 @@ const ChangeBtn = styled.button`
   height: 30px;
   border-radius: 50%;
   &:hover {
-    border: 1px solid #e99953;
+    border: 1.5px solid #e99953;
   }
+  margin: 0 10px;
 `;
 
 const DateContainer = styled(NoCenterVertical)`
   width: 40%;
   padding: 0 20px;
   height: 100px;
+  border-right: 1.5px solid #e99953;
 
   > div {
     > p {
@@ -196,7 +199,7 @@ const DateContainer = styled(NoCenterVertical)`
       min-width: 160px;
 
       &:hover {
-        border: 1px solid #e99953;
+        border: 1.5px solid #e99953;
       }
 
       > i {
