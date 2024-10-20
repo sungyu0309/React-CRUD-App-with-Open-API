@@ -2,7 +2,6 @@ import React from "react";
 import AirlineSearchComponent from "../components/MainPage/AirlineSearchComponent";
 import AirlineListsComponent from "../components/MainPage/AirlineListsComponent";
 import { Vertical } from "../styles/CommunalStyle";
-import { Link } from "react-router-dom";
 import BackImg from "../imgs/backImg.png";
 import styled from "styled-components";
 import Header from "../components/MainPage/Header";
@@ -11,13 +10,8 @@ export default function MainPage() {
   return (
     <Wrapper back={BackImg}>
       <Header />
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
-        <Link to="/mypage">
-          <button style={{ padding: "10px 20px", fontSize: "16px" }}>
-            Go to MyPage
-          </button>
-        </Link>
-      </div>
+      <h1> &nbsp;</h1>
+      <h2> &nbsp;</h2>
       <AirlineSearchComponent />
       <AirlineListsComponent />
     </Wrapper>
