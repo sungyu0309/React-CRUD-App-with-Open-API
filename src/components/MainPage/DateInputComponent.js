@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Horizontal, Vertical } from "../../styles/CommunalStyle";
+import { Horizontal } from "../../styles/CommunalStyle";
 import SearchModalComponent from "./SearchModalComponent";
 import CalenderComponent from "./CalenderComponent";
 import styled from "styled-components";
