@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Mypage.css";
+import Header from "../components/MainPage/Header";
+
 
 export default function Mypage() {
   const [flights, setFlights] = useState([]);

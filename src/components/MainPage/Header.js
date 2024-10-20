@@ -10,8 +10,8 @@ export default function Header() {
     <Wrapper>
       <Logo>WanderAir</Logo>
       <BtnContainer>
-        <NavigateBtn onClick={() => navitate("/")}>Main</NavigateBtn>
-        <NavigateBtn onClick={() => navitate("/mypage")}>My Page</NavigateBtn>
+        <NavigateBtn onClick={() => navigate("/")}>Main</NavigateBtn> {/* 오타 수정 */}
+        <NavigateBtn onClick={() => navigate("/mypage")}>My Page</NavigateBtn> {/* 오타 수정 */}
       </BtnContainer>
     </Wrapper>
   );
