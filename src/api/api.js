@@ -27,7 +27,7 @@ export const getAirportCode = async (pageNo) => {
 export const getDomesticAirline = async (pageNo, date, airlineInfo) => {
   try {
     const serviceKey = process.env.REACT_APP_API_KEY;
-    const url = `${URL}/service/rest/FlightScheduleList/getDflightScheduleList`;
+    const url = `/api/service/rest/FlightScheduleList/getDflightScheduleList`;
     const fullUrl = `${url}?ServiceKey=${serviceKey}&pageNo=${pageNo}&schDate=${date}&schArrvCityCode=${airlineInfo.arriveCode}&schDeptCityCode=${airlineInfo.departCode}`;
 
     const response = await axios.get(fullUrl);
