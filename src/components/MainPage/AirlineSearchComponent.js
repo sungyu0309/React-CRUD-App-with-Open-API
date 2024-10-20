@@ -16,8 +16,8 @@ export default function AirlineSearchComponent() {
   const [airlineInfo, setAirlineInfo] = useState({
     departAirport: "인천",
     departCode: "ICN",
-    arriveAirport: "부산/김해",
-    arriveCode: "PUS",
+    arriveAirport: "베이징/다싱",
+    arriveCode: "PKX",
     minDate: "",
     maxDate: "",
   });

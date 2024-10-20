@@ -168,7 +168,7 @@ const AllListContainer = styled.div`
 
 const ListContainer = styled(Horizontal)`
   /* box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1); */
-  margin: 20px;
+  margin: 10px;
   border: 1px solid black;
   height: 80px;
   padding: 20px;
