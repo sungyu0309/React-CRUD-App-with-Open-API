@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 export default function Header() {
-  const navitate = useNavigate();
+  const navigate = useNavigate(); // navigate 함수로 수정
+
   return (
     <Wrapper>
       <Logo>WanderAir</Logo>

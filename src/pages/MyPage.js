@@ -100,9 +100,12 @@ export default function Mypage() {
 
   return (
     <div className="scroll-container">
+
+    <Header />
       <header className="header">
-        <h1>WanderAir</h1>
-        <p>Explore your upcoming trips.</p>
+      
+        <h1> &nbsp;</h1>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Explore your upcoming trips.</p>
         <h2>MyTrip</h2>
       </header>
 
