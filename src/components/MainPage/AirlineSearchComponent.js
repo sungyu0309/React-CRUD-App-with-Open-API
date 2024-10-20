@@ -59,7 +59,7 @@ export default function AirlineSearchComponent() {
   };
   return (
     <Wrapper>
-      <Horizontal style={{ marginTop: "30px", justifyContent: "center" }}>
+      <Horizontal style={{ justifyContent: "center" }}>
         {showModal && (
           <SearchModalComponent
             closeModal={() => setShowModal(false)}
@@ -98,9 +98,11 @@ export default function AirlineSearchComponent() {
           </LocationBtn>
         </LocationContainer>
         <DateContainer>
-          <Horizontal style={{ justifyContent: "flex-start" }}>
+          <Horizontal
+            style={{ justifyContent: "flex-start", marginBottom: "5px" }}
+          >
             <p>출발일</p>
-            <button onClick={handleResetBtnClick}>
+            <button onClick={handleResetBtnClick} id="reset">
               <i className="fa fa-refresh" />
             </button>
           </Horizontal>
@@ -123,6 +125,7 @@ const Wrapper = styled.div`
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.4);
 `;
 
 const LocationContainer = styled(Horizontal)`
@@ -136,12 +139,12 @@ const LocationBtn = styled.button`
   position: relative;
   border: none;
   border-radius: 0.2rem;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.6);
   width: calc((100% - 50px) / 2);
   cursor: pointer;
 
   &:hover {
-    border: 1px solid rgb(100, 100, 200);
+    border: 1.5px solid #e99953; /* 진한 주황색 */
   }
 
   > div {
@@ -155,12 +158,12 @@ const LocationBtn = styled.button`
 const ChangeBtn = styled.button`
   cursor: pointer;
   border: 0.5px solid gray;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.6);
   width: 30px;
   height: 30px;
   border-radius: 50%;
   &:hover {
-    border: 1px solid rgb(100, 100, 200);
+    border: 1px solid #e99953;
   }
 `;
 
@@ -172,25 +175,42 @@ const DateContainer = styled(NoCenterVertical)`
   > div {
     > p {
       margin: 0;
-      color: gray;
+      color: black;
+      background-color: rgba(255, 255, 255, 0.6);
+      padding: 3px 10px;
       margin-right: 20px;
     }
 
-    > button {
+    > span {
+      font-size: 28px;
+    }
+
+    > #minDateBtn,
+    #maxDateBtn {
       border: none;
       cursor: pointer;
-      background-color: white;
+      background-color: rgba(255, 255, 255, 0.6);
       padding: 5px;
       border-radius: 4px;
       border: 1px solid transparent;
+      min-width: 160px;
 
       &:hover {
-        border: 1px solid rgb(100, 100, 200);
+        border: 1px solid #e99953;
       }
 
       > i {
-        font-size: 18px;
+        font-size: 16px;
       }
+    }
+
+    #reset {
+      font-size: 16px;
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.6);
+      padding: 2px;
+      border-radius: 4px;
+      border: 1px solid transparent;
     }
   }
 `;

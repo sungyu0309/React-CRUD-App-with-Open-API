@@ -111,17 +111,19 @@ export default function LoadBtnComponent({ airlineInfo }) {
   };
   return (
     <>
-      <LoadBtn onClick={handleBtnClick}>항공편 검색</LoadBtn>
+      <LoadBtn onClick={handleBtnClick}>
+        <i className="fa fa-search" style={{ fontSize: "25px" }} />
+      </LoadBtn>
     </>
   );
 }
 
 const LoadBtn = styled.button`
-  background-color: rgb(100, 100, 200);
+  background-color: #e99953;
   color: white;
-  border: 1px solid rgb(100, 100, 200);
+  border: 1px solid #e99953;
   border-radius: 4px;
-  width: 130px;
+  width: 100px;
   height: 60px;
   font-size: 20px;
   cursor: pointer;

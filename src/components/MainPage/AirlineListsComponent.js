@@ -149,8 +149,8 @@ export default function AirlineListsComponent() {
 
 const AllListContainer = styled.div`
   width: 90%;
-  margin-top: 20px;
-  height: 300px;
+  margin-top: 40px;
+  height: 450px;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 10px;
@@ -166,6 +166,7 @@ const ListContainer = styled(Horizontal)`
   height: 80px;
   padding: 20px;
   border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.7);
 
   .time {
     font-size: 25px;
@@ -216,8 +217,8 @@ const MakeTripBtn = styled.button`
   font-size: 16px;
   line-height: 30px;
   border-radius: 8px;
-  background-color: rgb(100, 100, 200);
+  background-color: #e99953;
   color: white;
-  border: 1px solid rgb(100, 100, 200);
+  border: 1px solid #e99953;
   cursor: pointer;
 `;
