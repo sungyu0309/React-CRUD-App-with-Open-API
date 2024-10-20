@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/api/*"                  # 프론트엔드에서 /api로 시작하는 모든 요청을
+  to = "http://openapi.airport.co.kr/:splat"  # 실제 API 서버로 전달
+  status = 200                     # 성공 상태로 처리
+  force = true                     # 강제로 이 규칙을 적용
